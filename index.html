@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lo Shu Grid Date Finder — Mulank & Bhagyank Calculator</title>
+  <meta name="description" content="Find dates whose Lo Shu Grid contains your chosen numbers. Calculate Mulank (Root Number) and Bhagyank (Destiny Number) for any date range.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="bg-orbs">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <header class="header">
+    <div class="logo">
+      <div class="logo-icon">☰</div>
+      <h1>Lo Shu <span class="accent">Grid</span> Finder</h1>
+    </div>
+    <p class="tagline">Discover dates aligned with your numerological blueprint</p>
+  </header>
+
+  <main class="container">
+    <!-- Step 1: Select Numbers -->
+    <section class="card step-card" id="step1">
+      <div class="step-badge">Step 1</div>
+      <h2>Choose Your Lo Shu Numbers</h2>
+      <p class="step-desc">Select the numbers (1–9) you want <strong>present</strong> in the Lo Shu Grid. The finder will locate dates where every selected number appears — as a date digit, Mulank, or Bhagyank.</p>
+      
+      <div class="loshu-selector">
+        <div class="loshu-grid" id="selectorGrid">
+          <button class="loshu-cell" data-num="4" data-pos="0">4</button>
+          <button class="loshu-cell" data-num="9" data-pos="1">9</button>
+          <button class="loshu-cell" data-num="2" data-pos="2">2</button>
+          <button class="loshu-cell" data-num="3" data-pos="3">3</button>
+          <button class="loshu-cell" data-num="5" data-pos="4">5</button>
+          <button class="loshu-cell" data-num="7" data-pos="5">7</button>
+          <button class="loshu-cell" data-num="8" data-pos="6">8</button>
+          <button class="loshu-cell" data-num="1" data-pos="7">1</button>
+          <button class="loshu-cell" data-num="6" data-pos="8">6</button>
+        </div>
+        <div class="selection-info">
+          <span id="selectedCount">0</span> numbers selected
+        </div>
+      </div>
+    </section>
+
+    <!-- Step 2: Date Range -->
+    <section class="card step-card" id="step2">
+      <div class="step-badge">Step 2</div>
+      <h2>Set Your Date Range</h2>
+      <p class="step-desc">Provide a start date. The end date is automatically set to <strong>18 years before today</strong>.</p>
+      
+      <div class="date-inputs">
+        <div class="date-field">
+          <label for="startDate">Start Date</label>
+          <input type="date" id="startDate" />
+        </div>
+        <div class="date-arrow">→</div>
+        <div class="date-field">
+          <label for="endDate">End Date (auto)</label>
+          <input type="date" id="endDate" readonly />
+        </div>
+      </div>
+      <p class="end-date-note" id="endDateNote"></p>
+    </section>
+
+    <!-- Find Button -->
+    <div class="find-section">
+      <button class="btn-find" id="findBtn" disabled>
+        <span class="btn-text">Find Matching Dates</span>
+        <span class="btn-loader" id="btnLoader"></span>
+      </button>
+      <p class="error-msg" id="errorMsg"></p>
+    </div>
+
+    <!-- Results -->
+    <section class="card results-card" id="resultsSection" style="display:none;">
+      <div class="results-header">
+        <h2>Matching Dates</h2>
+        <div class="results-meta">
+          <span id="totalResults">0</span> dates found
+          <span class="separator">•</span>
+          <span id="searchRange"></span>
+        </div>
+      </div>
+
+      <div class="results-controls">
+        <input type="text" id="resultFilter" placeholder="Filter by date..." class="filter-input" />
+        <div class="view-toggle">
+          <button class="view-btn active" data-view="grid" id="viewGrid" title="Grid View">▦</button>
+          <button class="view-btn" data-view="list" id="viewList" title="List View">☰</button>
+        </div>
+      </div>
+
+      <div id="resultsContainer" class="results-grid"></div>
+      
+      <div class="pagination" id="pagination"></div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>Lo Shu Grid Date Finder &mdash; Mulank & Bhagyank Calculator</p>
+    <p class="footer-sub">Built with ♥ for numerology enthusiasts</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

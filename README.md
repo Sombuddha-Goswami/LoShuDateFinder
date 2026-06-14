@@ -43,4 +43,4 @@ A date's Lo Shu Grid is populated by:
 
 ## License
 
-MIT
+SG@2026

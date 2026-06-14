@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lo Shu Grid Date Finder — Mulank & Bhagyank Calculator</title>
-  <meta name="description" content="Find dates whose Lo Shu Grid contains your chosen numbers. Calculate Mulank (Root Number) and Bhagyank (Destiny Number) for any date range.">
+  <title>Lo Shu Grid Date Finder & Chaldean Name Number Calculator</title>
+  <meta name="description" content="Find dates whose Lo Shu Grid contains your chosen numbers. Calculate Mulank, Bhagyank, and Chaldean Name Numbers.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -25,87 +25,206 @@
     <p class="tagline">Discover dates aligned with your numerological blueprint</p>
   </header>
 
-  <main class="container">
-    <!-- Step 1: Select Numbers -->
-    <section class="card step-card" id="step1">
-      <div class="step-badge">Step 1</div>
-      <h2>Choose Your Lo Shu Numbers</h2>
-      <p class="step-desc">Select the numbers (1–9) you want <strong>present</strong> in the Lo Shu Grid. The finder will locate dates where every selected number appears — as a date digit, Mulank, or Bhagyank.</p>
-      
-      <div class="loshu-selector">
-        <div class="loshu-grid" id="selectorGrid">
-          <button class="loshu-cell" data-num="4" data-pos="0">4</button>
-          <button class="loshu-cell" data-num="9" data-pos="1">9</button>
-          <button class="loshu-cell" data-num="2" data-pos="2">2</button>
-          <button class="loshu-cell" data-num="3" data-pos="3">3</button>
-          <button class="loshu-cell" data-num="5" data-pos="4">5</button>
-          <button class="loshu-cell" data-num="7" data-pos="5">7</button>
-          <button class="loshu-cell" data-num="8" data-pos="6">8</button>
-          <button class="loshu-cell" data-num="1" data-pos="7">1</button>
-          <button class="loshu-cell" data-num="6" data-pos="8">6</button>
-        </div>
-        <div class="selection-info">
-          <span id="selectedCount">0</span> numbers selected
-        </div>
-      </div>
-    </section>
-
-    <!-- Step 2: Date Range -->
-    <section class="card step-card" id="step2">
-      <div class="step-badge">Step 2</div>
-      <h2>Set Your Date Range</h2>
-      <p class="step-desc">Provide a start date. The end date is automatically set to <strong>18 years before today</strong>.</p>
-      
-      <div class="date-inputs">
-        <div class="date-field">
-          <label for="startDate">Start Date</label>
-          <input type="date" id="startDate" />
-        </div>
-        <div class="date-arrow">→</div>
-        <div class="date-field">
-          <label for="endDate">End Date (auto)</label>
-          <input type="date" id="endDate" readonly />
-        </div>
-      </div>
-      <p class="end-date-note" id="endDateNote"></p>
-    </section>
-
-    <!-- Find Button -->
-    <div class="find-section">
-      <button class="btn-find" id="findBtn" disabled>
-        <span class="btn-text">Find Matching Dates</span>
-        <span class="btn-loader" id="btnLoader"></span>
+  <!-- Tab Navigation -->
+  <nav class="tab-nav" id="tabNav">
+    <div class="tab-nav-inner">
+      <button class="tab-btn active" data-tab="loshu" id="tabLoshu">
+        <span class="tab-icon">⊞</span>
+        <span class="tab-label">Lo Shu Grid Finder</span>
       </button>
-      <p class="error-msg" id="errorMsg"></p>
+      <button class="tab-btn" data-tab="chaldean" id="tabChaldean">
+        <span class="tab-icon">𝔄</span>
+        <span class="tab-label">Chaldean Name Number</span>
+      </button>
+      <div class="tab-indicator" id="tabIndicator"></div>
+    </div>
+  </nav>
+
+  <main class="container">
+
+    <!-- ==================== TAB 1: Lo Shu Grid Finder ==================== -->
+    <div class="tab-content active" id="tab-loshu">
+
+      <!-- Step 1: Select Numbers -->
+      <section class="card step-card" id="step1">
+        <div class="step-badge">Step 1</div>
+        <h2>Choose Your Lo Shu Numbers</h2>
+        <p class="step-desc">Select the numbers (1–9) you want <strong>present</strong> in the Lo Shu Grid. The finder will locate dates where every selected number appears — as a date digit, Mulank, or Bhagyank.</p>
+        
+        <div class="loshu-selector">
+          <div class="loshu-grid" id="selectorGrid">
+            <button class="loshu-cell" data-num="4" data-pos="0">4</button>
+            <button class="loshu-cell" data-num="9" data-pos="1">9</button>
+            <button class="loshu-cell" data-num="2" data-pos="2">2</button>
+            <button class="loshu-cell" data-num="3" data-pos="3">3</button>
+            <button class="loshu-cell" data-num="5" data-pos="4">5</button>
+            <button class="loshu-cell" data-num="7" data-pos="5">7</button>
+            <button class="loshu-cell" data-num="8" data-pos="6">8</button>
+            <button class="loshu-cell" data-num="1" data-pos="7">1</button>
+            <button class="loshu-cell" data-num="6" data-pos="8">6</button>
+          </div>
+          <div class="selection-info">
+            <span id="selectedCount">0</span> numbers selected
+          </div>
+        </div>
+      </section>
+
+      <!-- Step 2: Date Range -->
+      <section class="card step-card" id="step2">
+        <div class="step-badge">Step 2</div>
+        <h2>Set Your Date Range</h2>
+        <p class="step-desc">Provide a start date. The end date is automatically set to <strong>18 years before today</strong>.</p>
+        
+        <div class="date-inputs">
+          <div class="date-field">
+            <label for="startDate">Start Date</label>
+            <input type="date" id="startDate" />
+          </div>
+          <div class="date-arrow">→</div>
+          <div class="date-field">
+            <label for="endDate">End Date (auto)</label>
+            <input type="date" id="endDate" readonly />
+          </div>
+        </div>
+        <p class="end-date-note" id="endDateNote"></p>
+      </section>
+
+      <!-- Find Button -->
+      <div class="find-section">
+        <button class="btn-find" id="findBtn" disabled>
+          <span class="btn-text">Find Matching Dates</span>
+          <span class="btn-loader" id="btnLoader"></span>
+        </button>
+        <p class="error-msg" id="errorMsg"></p>
+      </div>
+
+      <!-- Results -->
+      <section class="card results-card" id="resultsSection" style="display:none;">
+        <div class="results-header">
+          <h2>Matching Dates</h2>
+          <div class="results-meta">
+            <span id="totalResults">0</span> dates found
+            <span class="separator">•</span>
+            <span id="searchRange"></span>
+          </div>
+        </div>
+
+        <div class="results-controls">
+          <input type="text" id="resultFilter" placeholder="Filter by date..." class="filter-input" />
+          <div class="view-toggle">
+            <button class="view-btn active" data-view="grid" id="viewGrid" title="Grid View">▦</button>
+            <button class="view-btn" data-view="list" id="viewList" title="List View">☰</button>
+          </div>
+        </div>
+
+        <div id="resultsContainer" class="results-grid"></div>
+        
+        <div class="pagination" id="pagination"></div>
+      </section>
+
     </div>
 
-    <!-- Results -->
-    <section class="card results-card" id="resultsSection" style="display:none;">
-      <div class="results-header">
-        <h2>Matching Dates</h2>
-        <div class="results-meta">
-          <span id="totalResults">0</span> dates found
-          <span class="separator">•</span>
-          <span id="searchRange"></span>
-        </div>
-      </div>
+    <!-- ==================== TAB 2: Chaldean Name Number ==================== -->
+    <div class="tab-content" id="tab-chaldean">
 
-      <div class="results-controls">
-        <input type="text" id="resultFilter" placeholder="Filter by date..." class="filter-input" />
-        <div class="view-toggle">
-          <button class="view-btn active" data-view="grid" id="viewGrid" title="Grid View">▦</button>
-          <button class="view-btn" data-view="list" id="viewList" title="List View">☰</button>
-        </div>
-      </div>
+      <!-- Chaldean Chart Display -->
+      <section class="card step-card">
+        <div class="step-badge">Reference</div>
+        <h2>Chaldean Name Number Chart</h2>
+        <p class="step-desc">Each letter maps to a number (1–8). The number <strong>9 is sacred</strong> in Chaldean numerology and is not assigned to any letter.</p>
 
-      <div id="resultsContainer" class="results-grid"></div>
-      
-      <div class="pagination" id="pagination"></div>
-    </section>
+        <div class="chaldean-chart" id="chaldeanChart">
+          <div class="chart-col">
+            <div class="chart-num">1</div>
+            <div class="chart-letters">
+              <span>A</span><span>I</span><span>J</span><span>Q</span><span>Y</span>
+            </div>
+          </div>
+          <div class="chart-col">
+            <div class="chart-num">2</div>
+            <div class="chart-letters">
+              <span>B</span><span>K</span><span>R</span>
+            </div>
+          </div>
+          <div class="chart-col">
+            <div class="chart-num">3</div>
+            <div class="chart-letters">
+              <span>C</span><span>G</span><span>L</span><span>S</span>
+            </div>
+          </div>
+          <div class="chart-col">
+            <div class="chart-num">4</div>
+            <div class="chart-letters">
+              <span>D</span><span>M</span><span>T</span>
+            </div>
+          </div>
+          <div class="chart-col">
+            <div class="chart-num">5</div>
+            <div class="chart-letters">
+              <span>E</span><span>H</span><span>N</span><span>X</span>
+            </div>
+          </div>
+          <div class="chart-col">
+            <div class="chart-num">6</div>
+            <div class="chart-letters">
+              <span>U</span><span>V</span><span>W</span>
+            </div>
+          </div>
+          <div class="chart-col">
+            <div class="chart-num">7</div>
+            <div class="chart-letters">
+              <span>O</span><span>Z</span>
+            </div>
+          </div>
+          <div class="chart-col">
+            <div class="chart-num">8</div>
+            <div class="chart-letters">
+              <span>F</span><span>P</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Name Input -->
+      <section class="card step-card">
+        <div class="step-badge">Calculator</div>
+        <h2>Calculate Your Name Number</h2>
+        <p class="step-desc">Enter a name below. Spaces and non-alphabetic characters are ignored. Each word's value is shown individually, then reduced to a final single-digit Name Number.</p>
+
+        <div class="name-input-area">
+          <label for="nameInput" class="name-label">Enter Name</label>
+          <input type="text" id="nameInput" class="name-input" placeholder="e.g. Sombuddha Goswami" autocomplete="off" spellcheck="false" />
+        </div>
+
+        <!-- Live Breakdown -->
+        <div class="name-result" id="nameResult" style="display:none;">
+          
+          <!-- Letter breakdown -->
+          <div class="breakdown-section">
+            <h3>Letter Breakdown</h3>
+            <div class="letter-breakdown" id="letterBreakdown"></div>
+          </div>
+
+          <!-- Word totals -->
+          <div class="breakdown-section">
+            <h3>Word Totals</h3>
+            <div class="word-totals" id="wordTotals"></div>
+          </div>
+
+          <!-- Final Number -->
+          <div class="final-number-section">
+            <div class="final-label">Chaldean Name Number</div>
+            <div class="final-reduction" id="finalReduction"></div>
+            <div class="final-number" id="finalNumber"></div>
+          </div>
+        </div>
+      </section>
+    </div>
+
   </main>
 
   <footer class="footer">
-    <p>Lo Shu Grid Date Finder &mdash; Mulank & Bhagyank Calculator</p>
+    <p>Lo Shu Grid Date Finder &mdash; Mulank, Bhagyank & Chaldean Name Number Calculator</p>
     <p class="footer-sub">Built with ♥ for numerology enthusiasts</p>
   </footer>
 

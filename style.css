@@ -1,5 +1,5 @@
 /* ============================================
-   Lo Shu Grid Date Finder — Styles
+   Lo Shu Grid Date Finder — Styles v2
    ============================================ */
 
 :root {
@@ -110,7 +110,7 @@ body {
   position: relative;
   z-index: 1;
   text-align: center;
-  padding: 3rem 1.5rem 1.5rem;
+  padding: 3rem 1.5rem 1rem;
 }
 
 .logo {
@@ -159,13 +159,95 @@ body {
   letter-spacing: 0.02em;
 }
 
+/* ---- Tab Navigation ---- */
+.tab-nav {
+  position: relative;
+  z-index: 2;
+  max-width: 780px;
+  margin: 1.25rem auto 0;
+  padding: 0 1.5rem;
+}
+
+.tab-nav-inner {
+  display: flex;
+  position: relative;
+  background: rgba(10, 10, 30, 0.6);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 4px;
+  backdrop-filter: blur(16px);
+}
+
+.tab-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: none;
+  border: none;
+  border-radius: 10px;
+  color: var(--text-muted);
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition);
+  position: relative;
+  z-index: 1;
+}
+
+.tab-btn:hover {
+  color: var(--text-secondary);
+}
+
+.tab-btn.active {
+  color: white;
+}
+
+.tab-icon {
+  font-size: 1.1rem;
+}
+
+.tab-indicator {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: calc(50% - 4px);
+  height: calc(100% - 8px);
+  background: linear-gradient(135deg, var(--accent-1), rgba(108, 92, 231, 0.7));
+  border-radius: 10px;
+  transition: transform var(--transition);
+  box-shadow: 0 4px 16px rgba(108, 92, 231, 0.3);
+}
+
+.tab-indicator.tab-right {
+  transform: translateX(100%);
+}
+
+/* ---- Tab Content ---- */
+.tab-content {
+  display: none;
+  animation: tabFadeIn 0.4s ease;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+@keyframes tabFadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 /* ---- Container ---- */
 .container {
   position: relative;
   z-index: 1;
   max-width: 780px;
   margin: 0 auto;
-  padding: 0 1.5rem 3rem;
+  padding: 1.5rem 1.5rem 3rem;
 }
 
 /* ---- Cards ---- */
@@ -268,11 +350,6 @@ body {
 
 .loshu-cell.selected::before {
   opacity: 0.2;
-}
-
-.loshu-cell span {
-  position: relative;
-  z-index: 1;
 }
 
 .selection-info {
@@ -421,14 +498,8 @@ body {
 }
 
 @keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .results-header {
@@ -671,6 +742,269 @@ body {
   cursor: not-allowed;
 }
 
+/* ============================================
+   CHALDEAN NAME NUMBER TAB
+   ============================================ */
+
+/* ---- Chaldean Chart ---- */
+.chaldean-chart {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 6px;
+  margin-top: 0.5rem;
+}
+
+.chart-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: rgba(10, 10, 30, 0.4);
+  transition: all var(--transition);
+}
+
+.chart-col:hover {
+  border-color: var(--accent-2);
+  box-shadow: 0 0 16px rgba(108, 92, 231, 0.15);
+}
+
+.chart-num {
+  width: 100%;
+  padding: 0.6rem 0;
+  text-align: center;
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, rgba(108, 92, 231, 0.2), rgba(253, 121, 168, 0.1));
+  color: var(--accent-2);
+  border-bottom: 1px solid var(--border);
+}
+
+.chart-letters {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 0.5rem 0.25rem;
+  width: 100%;
+}
+
+.chart-letters span {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  width: 100%;
+  text-align: center;
+  padding: 0.15rem 0;
+  border-radius: 4px;
+  transition: all var(--transition);
+}
+
+.chart-letters span.active-letter {
+  background: rgba(108, 92, 231, 0.2);
+  color: var(--accent-2);
+}
+
+/* ---- Name Input ---- */
+.name-input-area {
+  margin-bottom: 1.5rem;
+}
+
+.name-label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+}
+
+.name-input {
+  width: 100%;
+  padding: 0.9rem 1.2rem;
+  background: rgba(10, 10, 30, 0.6);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  outline: none;
+  transition: all var(--transition);
+}
+
+.name-input:focus {
+  border-color: var(--accent-1);
+  box-shadow: 0 0 0 4px rgba(108, 92, 231, 0.12);
+}
+
+.name-input::placeholder {
+  color: var(--text-muted);
+  font-weight: 400;
+}
+
+/* ---- Name Result ---- */
+.name-result {
+  animation: slideUp 0.4s ease;
+}
+
+.breakdown-section {
+  margin-bottom: 1.5rem;
+}
+
+.breakdown-section h3 {
+  font-family: var(--font-display);
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  margin-bottom: 0.75rem;
+}
+
+/* Letter breakdown row */
+.letter-breakdown {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.letter-chip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(10, 10, 30, 0.5);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0.4rem 0.5rem 0.3rem;
+  min-width: 38px;
+  transition: all var(--transition);
+}
+
+.letter-chip:hover {
+  border-color: var(--accent-2);
+  transform: translateY(-2px);
+}
+
+.letter-chip .letter {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.letter-chip .letter-val {
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--accent-2);
+  margin-top: 1px;
+}
+
+.letter-chip.space-chip {
+  background: transparent;
+  border-color: transparent;
+  min-width: 16px;
+  pointer-events: none;
+}
+
+/* Word totals */
+.word-totals {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.word-total-card {
+  background: rgba(10, 10, 30, 0.5);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 0.75rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 100px;
+  transition: all var(--transition);
+}
+
+.word-total-card:hover {
+  border-color: var(--accent-2);
+}
+
+.word-total-card .word-name {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.word-total-card .word-sum {
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.word-total-card .word-val {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--accent-2);
+}
+
+/* Final number */
+.final-number-section {
+  text-align: center;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, rgba(108, 92, 231, 0.08), rgba(253, 121, 168, 0.06));
+  border: 1px solid rgba(108, 92, 231, 0.2);
+  border-radius: var(--radius-lg);
+}
+
+.final-label {
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+}
+
+.final-reduction {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  margin-bottom: 0.75rem;
+  word-break: break-all;
+}
+
+.final-reduction .reduction-arrow {
+  color: var(--accent-3);
+  margin: 0 0.3rem;
+}
+
+.final-number {
+  font-family: var(--font-display);
+  font-size: 4rem;
+  font-weight: 900;
+  line-height: 1;
+  background: linear-gradient(135deg, var(--accent-1), var(--accent-3));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: pulseGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes pulseGlow {
+  from { filter: drop-shadow(0 0 8px rgba(108, 92, 231, 0.3)); }
+  to { filter: drop-shadow(0 0 20px rgba(253, 121, 168, 0.4)); }
+}
+
 /* ---- Footer ---- */
 .footer {
   position: relative;
@@ -696,15 +1030,23 @@ body {
 /* ---- Responsive ---- */
 @media (max-width: 600px) {
   .header {
-    padding: 2rem 1rem 1rem;
+    padding: 2rem 1rem 0.75rem;
   }
 
   .logo h1 {
     font-size: 1.5rem;
   }
 
+  .tab-nav {
+    padding: 0 1rem;
+  }
+
+  .tab-label {
+    font-size: 0.78rem;
+  }
+
   .container {
-    padding: 0 1rem 2rem;
+    padding: 1rem 1rem 2rem;
   }
 
   .card {
@@ -733,6 +1075,15 @@ body {
   .results-controls {
     flex-direction: column;
   }
+
+  .chaldean-chart {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+  }
+
+  .final-number {
+    font-size: 3rem;
+  }
 }
 
 /* ---- Scrollbar ---- */
@@ -753,7 +1104,6 @@ body {
   background: rgba(108, 92, 231, 0.5);
 }
 
-/* ---- Color scheme for date input icons ---- */
 input[type="date"]::-webkit-calendar-picker-indicator {
   filter: invert(0.6) sepia(1) saturate(3) hue-rotate(220deg);
   cursor: pointer;
